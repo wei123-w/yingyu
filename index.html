@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102e60">
+  <meta name="description" content="English VS 英语对战课堂，让英语学习变成一场有趣的比赛。">
+  <script>if(location.protocol==='file:')document.documentElement.classList.add('file-protocol')</script>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>English VS · 英语对战课堂</title>
+  <link rel="stylesheet" href="styles.css?v=15">
+  <script src="vendor/mammoth/mammoth.browser.min.js"></script>
+  <script type="module" src="src/main.js?v=18"></script>
+</head>
+<body>
+  <div class="file-warning">此页面通过 file:// 打开，浏览器可能会阻止模块和本地数据库运行。请在项目目录双击 start.bat，通过本地服务打开。</div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" data-route="home" aria-label="English VS 首页"><span>English</span><b>VS</b></a>
+      <div class="sidebar-scroll">
+        <div class="nav-caption">课堂工作台</div>
+        <nav class="nav-list" aria-label="主导航">
+          <button class="nav-item active" data-route="home"><span class="nav-icon">⌂</span><span>首页</span></button>
+          <button class="nav-item" data-route="words"><span class="nav-icon">▤</span><span>单词库</span><i id="nav-word-count">—</i></button>
+          <button class="nav-item" data-route="games"><span class="nav-icon">♧</span><span>游戏中心</span></button>
+          <button class="nav-item" data-route="battle"><span class="nav-icon">⚔</span><span>对战模式</span><em class="live-dot"></em></button>
+          <button class="nav-item" data-route="leaderboard"><span class="nav-icon">▥</span><span>排行榜</span></button>
+          <button class="nav-item" data-route="history"><span class="nav-icon">◷</span><span>学习记录</span></button>
+        </nav>
+        <div class="nav-caption nav-caption-spaced">偏好设置</div>
+        <nav class="nav-list" aria-label="偏好设置">
+          <button class="nav-item" data-route="settings"><span class="nav-icon">⚙</span><span>系统设置</span></button>
+        </nav>
+      </div>
+      <div class="sidebar-footer"><span class="status-pulse"></span><span>本地课堂已就绪</span><button id="sidebar-collapse" aria-label="收起导航">‹</button></div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button id="mobile-menu" class="icon-button mobile-menu" aria-label="打开导航">☰</button>
+        <div class="breadcrumbs"><span>课堂空间</span><span class="crumb-slash">/</span><strong id="page-title">首页</strong></div>
+        <div class="top-actions">
+          <span class="connection-pill"><span class="status-pulse"></span>离线可用</span>
+          <button class="icon-button" id="theme-toggle" aria-label="切换明暗主题" title="切换主题">☼</button>
+          <button class="avatar-button" id="profile-button" aria-label="课堂资料">林</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <section class="route-view active" id="view-home" aria-label="首页工作台">
+          <div class="dashboard-grid">
+            <article class="panel hero-panel grid-span-4">
+              <div class="hero-copy"><span class="eyebrow hero-eyebrow">ENGLISH · CLASSROOM ARENA</span><h1>让英语学习<br>变成一场有趣的比赛！</h1><p>AI 辅助识别 · 多种游戏玩法 · 轻松记单词</p><button class="button button-light" data-route="games">进入游戏中心 <span>→</span></button></div>
+              <div class="hero-art" aria-hidden="true"><div class="sun-orbit"></div><div class="mountain mountain-one"></div><div class="mountain mountain-two"></div><div class="bot"><div class="bot-antenna"></div><div class="bot-face"><span>• •</span><b>⌣</b></div><div class="bot-body"><span>A</span></div><div class="bot-arm"></div></div><div class="hello-bubble">Hello!</div><span class="float-star star-a">✦</span><span class="float-star star-b">✧</span></div>
+            </article>
+
+            <article class="panel import-panel grid-span-4">
+              <div class="panel-heading"><div><span class="heading-icon blue">⇧</span><div><h2>导入单词</h2><p>导入教材，快速创建课堂词库</p></div></div><button class="text-button" data-route="import">查看全部 <span>→</span></button></div>
+              <div class="dropzone" id="home-dropzone" tabindex="0" role="button" aria-label="选择文件导入单词"><input id="home-file" type="file" accept=".txt,.csv,.tsv,.json,.docx,.pdf,image/*" multiple hidden><span class="upload-icon">⇧</span><strong>点击选择文件，或拖拽到这里</strong><small>TXT、CSV、JSON、DOCX、PDF 可本地读取；图片识别需配置联网 AI</small><button class="button button-primary button-small" id="choose-home-file">选择文件</button></div>
+              <div class="import-foot"><span>✓ 本地解析，数据留在此设备</span><button class="text-button" data-route="import">了解格式说明</button></div>
+            </article>
+
+            <article class="panel library-panel grid-span-4">
+              <div class="panel-heading"><div><span class="heading-icon violet">▤</span><div><h2>单词库管理</h2><p>你的课堂词汇一目了然</p></div></div><button class="icon-button subdued" data-route="words" aria-label="打开单词库">↗</button></div>
+              <div class="library-stats"><div class="library-total"><strong id="home-total-words">0</strong><span>个单词</span></div><div class="mini-stat"><span class="mini-stat-icon">▤</span><strong id="home-deck-count">0</strong><small>个词库</small></div><div class="mini-stat"><span class="mini-stat-icon mint">◷</span><strong id="home-play-count">0</strong><small>场练习</small></div></div>
+              <div class="deck-chips" id="home-deck-chips"></div>
+              <div class="panel-footer"><span>最近添加的词汇</span><button class="text-button" data-route="words">管理词库 →</button></div>
+              <div class="recent-words" id="home-recent-words"></div>
+            </article>
+
+            <article class="panel games-panel grid-span-4">
+              <div class="panel-heading"><div><span class="heading-icon orange">♧</span><div><h2>游戏中心</h2><p>选一个玩法，开始今日挑战</p></div></div><button class="text-button" data-route="games">全部玩法 <span>→</span></button></div>
+              <div class="game-tiles" id="home-game-tiles"></div>
+              <div class="games-note"><span class="live-dot"></span>个人挑战 · 本地计分 · 支持全屏</div>
+            </article>
+
+            <article class="panel battle-panel grid-span-4">
+              <div class="panel-heading"><div><span class="heading-icon cyan">⚔</span><div><h2>单词对战 · 实时挑战</h2><p>本机课堂演示模式</p></div></div><button class="button button-outline button-small" data-route="battle">开启对战</button></div>
+              <div class="battle-preview"><div class="player-card player-blue"><div class="player-avatar">🧑🏻‍🎓</div><div><small>我方</small><strong>120</strong></div><span class="player-level">LV. 4</span></div><div class="vs-mark">VS</div><div class="player-card player-pink"><div class="player-avatar">👩🏻‍🎓</div><div><small>对手</small><strong>95</strong></div><span class="player-level">演示</span></div></div>
+              <div class="battle-bottom"><div class="battle-timer"><span>本地练习预览</span><strong>01:30</strong></div><button class="button button-primary" data-route="battle">进入挑战大厅 →</button></div>
+            </article>
+
+            <article class="panel word-card-panel grid-span-4">
+              <div class="panel-heading"><div><span class="heading-icon blue">▣</span><div><h2>每日词汇卡</h2><p>听一听，也读一读</p></div></div><span class="streak-pill">✦ 今日推荐</span></div>
+              <div class="word-card-content" id="daily-word-card"></div>
+            </article>
+
+            <article class="panel leaderboard-panel grid-span-5">
+              <div class="panel-heading"><div><span class="heading-icon amber">♛</span><div><h2>课堂排行榜</h2><p>根据本机练习成绩自动更新</p></div></div><button class="text-button" data-route="leaderboard">查看排行 →</button></div>
+              <div class="leaderboard-preview" id="home-leaderboard"></div>
+            </article>
+
+            <article class="panel history-panel grid-span-4">
+              <div class="panel-heading"><div><span class="heading-icon violet">◷</span><div><h2>学习记录</h2><p>最近的挑战旅程</p></div></div><button class="icon-button subdued" data-route="history" aria-label="查看全部学习记录">↗</button></div>
+              <div id="home-history" class="history-preview"></div>
+            </article>
+
+            <article class="panel settings-preview-panel grid-span-3">
+              <div class="panel-heading"><div><span class="heading-icon slate">⚙</span><div><h2>课堂设置</h2><p>按你的习惯来调整</p></div></div><button class="icon-button subdued" data-route="settings" aria-label="设置">↗</button></div>
+              <button class="setting-quick" id="quick-sound"><span>🔊</span><span><strong>语音朗读</strong><small>练习时播放单词</small></span><span class="toggle on" aria-hidden="true"></span></button>
+              <button class="setting-quick" data-action="fullscreen"><span>⛶</span><span><strong>课堂大屏</strong><small>沉浸式展示模式</small></span><span>→</span></button>
+              <div class="offline-note"><span>●</span> 词库与成绩保存在本机</div>
+            </article>
+          </div>
+          <footer class="workspace-footer"><span>English VS · 让英语学习变成一场有趣的比赛</span><span id="storage-status">本地存储已准备就绪</span></footer>
+        </section>
+
+        <section class="route-view" id="view-words" aria-label="单词库管理"></section>
+        <section class="route-view" id="view-import" aria-label="导入单词"></section>
+        <section class="route-view" id="view-games" aria-label="游戏中心"></section>
+        <section class="route-view" id="view-battle" aria-label="对战模式"></section>
+        <section class="route-view" id="view-leaderboard" aria-label="排行榜"></section>
+        <section class="route-view" id="view-history" aria-label="学习记录"></section>
+        <section class="route-view" id="view-settings" aria-label="系统设置"></section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modal-backdrop" hidden><section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-heading"><div><span class="eyebrow">ENGLISH VS · CLASSROOM</span><h2 id="modal-title">编辑单词</h2></div><button class="icon-button" id="modal-close" aria-label="关闭">×</button></div><div id="modal-content"></div></section></div>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "name": "English VS 英语对战课堂",
+  "short_name": "English VS",
+  "description": "让英语学习变成一场有趣的比赛",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#edf3fc",
+  "theme_color": "#102e60"
+}
