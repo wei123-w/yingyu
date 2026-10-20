@@ -162,7 +162,7 @@ async function playLocalSpeech(text) {
   endpoint.searchParams.set('text', text);
   const response = await fetch(endpoint, { cache: 'no-store' });
   if (!response.ok) {
-    let message = `本机语音服务返回错误（${response.status}）。`;
+    let message = `语音服务返回错误（${response.status}）。`;
     try {
       const details = await response.json();
       if (details.error) message = details.error;
@@ -196,7 +196,7 @@ async function playLocalSpeech(text) {
 function speakWithBrowser(text, language, localError = null) {
   if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
     const reason = localError
-      ? `本机语音服务不可用：${localError.message} 请从项目目录重新运行 start.bat。`
+      ? `语音服务不可用：${localError.message} 正在尝试浏览器系统语音。`
       : '此浏览器不支持系统语音，请使用支持语音合成的浏览器。';
     toast(reason, 'error', 7000);
     return false;
@@ -223,10 +223,6 @@ function speakWithBrowser(text, language, localError = null) {
 export function speak(text, language = 'en-US') {
   const spokenText = String(text || '').trim();
   if (!spokenText) return false;
-  const hostname = window.location.hostname.replace(/^\[|\]$/g, '').toLowerCase();
-  const hasLocalWindowsService = ['127.0.0.1', 'localhost', '::1'].includes(hostname);
-  if (!hasLocalWindowsService) return speakWithBrowser(spokenText, language);
-
   void playLocalSpeech(spokenText).catch(error => speakWithBrowser(spokenText, language, error));
   return true;
 }

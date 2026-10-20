@@ -1,8 +1,8 @@
-const CACHE_NAME = 'english-vs-shell-v20';
+const CACHE_NAME = 'english-vs-shell-v21';
 const BASE = new URL('./', self.location.href);
 const APP_FILES = [
-  './', './index.html', './favicon.svg', './styles.css?v=15', './manifest.webmanifest', './src/main.js?v=19', './src/ai.js?v=15', './src/data.js',
-  './src/storage.js', './src/import.js', './src/words.js?v=15', './src/games.js', './src/ui.js?v=13',
+  './', './index.html', './favicon.svg', './styles.css?v=15', './manifest.webmanifest', './src/main.js?v=20', './src/ai.js?v=15', './src/data.js',
+  './src/storage.js', './src/import.js', './src/words.js?v=15', './src/games.js', './src/ui.js?v=14',
   './vendor/mammoth/mammoth.browser.min.js', './vendor/pdfjs/pdf.min.mjs', './vendor/pdfjs/pdf.worker.min.mjs',
 ];
 
