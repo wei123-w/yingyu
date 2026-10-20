@@ -4,7 +4,7 @@ import { normalizeImportRows, readImportFile } from './import.js';
 import { filterWords, renderWordsPage, wordFormHTML, deckFormHTML, renderImportPreview } from './words.js?v=15';
 import { requestAI } from './ai.js?v=15';
 import { renderGamesPage, renderBattlePage, renderGameConfig, createSession, answerQuestion, advanceSession, tickSession, revealMemoryCard, hideMismatchedCards, completeSession, renderGameSession, renderLeaderboardPage, renderHistoryPage, historyTable } from './games.js';
-import { closeModal, confirmAction, downloadJSON, escapeHTML, formatDate, openModal, speak, toast, toggleFullscreen } from './ui.js?v=12';
+import { closeModal, confirmAction, downloadJSON, escapeHTML, formatDate, openModal, speak, toast, toggleFullscreen } from './ui.js?v=13';
 
 const state = {
   route: 'home', words: [], decks: [], records: [], settings: {}, backend: 'indexeddb',

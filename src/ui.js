@@ -193,24 +193,40 @@ async function playLocalSpeech(text) {
   }
 }
 
-function speakWithBrowser(text, language, localError) {
+function speakWithBrowser(text, language, localError = null) {
   if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
-    toast(`本机语音服务不可用：${localError.message} 请从项目目录重新运行 start.bat。`, 'error', 7000);
+    const reason = localError
+      ? `本机语音服务不可用：${localError.message} 请从项目目录重新运行 start.bat。`
+      : '此浏览器不支持系统语音，请使用支持语音合成的浏览器。';
+    toast(reason, 'error', 7000);
     return false;
   }
   const synthesis = window.speechSynthesis;
   const voices = synthesis.getVoices();
   if (voices.length) return speakWithVoices(text, language, synthesis, voices);
-  void availableSpeechVoices(synthesis).then(loadedVoices => {
-    if (loadedVoices.length) speakWithVoices(text, language, synthesis, loadedVoices);
-    else toast(`本机语音服务不可用：${localError.message}；浏览器也没有加载到语音。`, 'error', 7000);
-  });
+
+  synthesis.cancel();
+  synthesis.resume?.();
+  const utterance = new SpeechSynthesisUtterance(String(text));
+  utterance.lang = language;
+  utterance.rate = 0.84;
+  utterance.pitch = 1.08;
+  utterance.volume = 1;
+  utterance.onerror = event => {
+    if (event.error === 'canceled' || event.error === 'interrupted') return;
+    toast(`${speechErrorMessage(event.error)}（错误码：${event.error || '浏览器未提供错误码'}）`, 'error', 6000);
+  };
+  synthesis.speak(utterance);
   return true;
 }
 
 export function speak(text, language = 'en-US') {
   const spokenText = String(text || '').trim();
   if (!spokenText) return false;
+  const hostname = window.location.hostname.replace(/^\[|\]$/g, '').toLowerCase();
+  const hasLocalWindowsService = ['127.0.0.1', 'localhost', '::1'].includes(hostname);
+  if (!hasLocalWindowsService) return speakWithBrowser(spokenText, language);
+
   void playLocalSpeech(spokenText).catch(error => speakWithBrowser(spokenText, language, error));
   return true;
 }
