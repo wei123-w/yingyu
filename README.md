@@ -35,6 +35,8 @@ python -m http.server 8765 --bind 127.0.0.1
 
 Cloudflare Pages 的静态网页和 Functions 可在同一项目中发布，Pages Functions 会处理 `functions/` 目录对应的接口路由。仪表板直接拖拽上传不支持 Functions，请用 Git 集成或 Wrangler 发布。详细配置见 [Cloudflare Pages 静态 HTML 发布说明](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/) 和 [Pages Functions 入门](https://developers.cloudflare.com/pages/functions/get-started/)。
 
+如果 Cloudflare 创建流程显示“Worker 项目”，本仓库也提供 Workers 入口和 Wrangler 配置：项目名称填 `yingyu`，构建命令填 `node build-pages.mjs`，部署命令填 `npx wrangler deploy`，预览命令填 `npx wrangler dev`。不要把 `pages-dist` 填在部署命令里；它是构建生成的静态资源目录，已在 `wrangler.jsonc` 中配置。Workers 会把 `/api/` 请求交给 Worker 入口，其余请求由静态资源服务返回。
+
 ## 功能
 
 - 首页仪表盘：快速导入、词库概况、游戏入口、学习记录和每日词汇卡。
@@ -82,6 +84,7 @@ DOCX 与 PDF 通过项目内附带的解析器在本机提取文字。扫描版 
 
 - `index.html`：应用框架。
 - `build-pages.mjs`：生成仅包含网页资源的 Cloudflare Pages 发布目录。
+- `worker.js`、`wrangler.jsonc`：Cloudflare Workers 网页资源与 AI 转发入口配置。
 - `styles.css`：视觉、响应式布局和主题。
 - `src/main.js`：导航、视图和交互流程。
 - `functions/api/ai/chat/completions.js`：Cloudflare Pages 同源 AI 转发接口。
